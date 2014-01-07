@@ -1,6 +1,6 @@
 /* Common Angular tools */
 angular.module('de.cismet.commons.angular.angularTools', []).
-    factory('AngularTools', function () {
+    factory('de.cismet.commons.angular.angularTools.AngularTools', function () {
         'use strict';
 
         var safeApply = function (scope, fn) {
