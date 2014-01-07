@@ -133,7 +133,10 @@ module.exports = function (grunt) {
     // not used since Uglify task does concat,
     // but still available if needed
     concat: {
-      dist: {}
+      dist: {
+          src: '<%= yeoman.app %>/scripts/**/*.js',
+          dest: '<%= yeoman.dist %>/scripts/angular-commons.js'
+      }
     },
     rev: {
       dist: {
@@ -180,7 +183,7 @@ module.exports = function (grunt) {
         }]
       }
     },
-    cssmin: {
+//    cssmin: {
       // By default, your `index.html` <!-- Usemin Block --> will take care of
       // minification. This option is pre-configured if you do not wish to use
       // Usemin blocks.
@@ -192,23 +195,43 @@ module.exports = function (grunt) {
       //     ]
       //   }
       // }
-    },
+//    },
     htmlmin: {
       dist: {
         options: {
-          /*removeCommentsFromCDATA: true,
+//          removeCommentsFromCDATA: true,
           // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
+//          collapseWhitespace: true,
+//          collapseBooleanAttributes: true,
+//          removeAttributeQuotes: true,
+//          removeRedundantAttributes: true,
+//          useShortDoctype: true,
+//          removeEmptyAttributes: true,
+//          removeOptionalTags: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['*.html', 'views/*.html'],
+          dest: '<%= yeoman.dist %>'
+        }]
+      },
+      deploy: {
+          options: {
+          removeComments: true,
+          removeCommentsFromCDATA: true,
+          // https://github.com/yeoman/grunt-usemin/issues/44
+          collapseWhitespace: true,
           collapseBooleanAttributes: true,
           removeAttributeQuotes: true,
           removeRedundantAttributes: true,
           useShortDoctype: true,
           removeEmptyAttributes: true,
-          removeOptionalTags: true*/
+          removeOptionalTags: true
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>',
+          cwd: '<%= yeoman.dist %>',
           src: ['*.html', 'views/*.html'],
           dest: '<%= yeoman.dist %>'
         }]
@@ -259,7 +282,7 @@ module.exports = function (grunt) {
         'copy:styles',
         'imagemin',
         'svgmin',
-        'htmlmin'
+        'htmlmin:dist'
       ]
     },
     karma: {
@@ -278,20 +301,20 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>/scripts',
-          src: '*.js',
+          src: '*.min.js',
           dest: '<%= yeoman.dist %>/scripts'
         }]
       }
-    },
-    uglify: {
-      dist: {
-        files: {
-          '<%= yeoman.dist %>/scripts/scripts.js': [
-            '<%= yeoman.dist %>/scripts/scripts.js'
-          ]
-        }
-      }
     }
+//    uglify: {
+//      dist: {
+//        files: {
+//          '<%= yeoman.dist %>/scripts/angular-commons.min.js': [
+//            '<%= yeoman.dist %>/scripts/angular-commons.js'
+//          ]
+//        }
+//      }
+//    }
   });
 
   grunt.registerTask('server', function (target) {
@@ -323,12 +346,15 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
-    'cdnify',
+//    currently does not work https://github.com/yeoman/generator-angular/issues/266
+//    'cdnify',
     'ngmin',
 //    'cssmin',
     'uglify',
-    'rev',
-    'usemin'
+//    'rev',
+    'usemin',
+    // workaround for https://github.com/yeoman/grunt-usemin/issues/44
+    'htmlmin:deploy'
   ]);
 
   grunt.registerTask('default', [
