@@ -5,10 +5,18 @@ describe('AngularToolsServiceTest', function () {
 
     beforeEach(module('de.cismet.commons.angular.angularTools'));
 
-    beforeEach(inject(function ($rootScope, AngularTools) {
-        scope = $rootScope.$new();
-        tools = AngularTools;
-    }));
+    beforeEach(
+        inject(
+            [
+                '$rootScope',
+                'de.cismet.commons.angular.angularTools.AngularTools',
+                function ($rootScope, AngularTools) {
+                    scope = $rootScope.$new();
+                    tools = AngularTools;
+                }
+            ]
+        )
+    );
 
     it('safeApply should throw exception', function () {
         var exc, x;
@@ -19,6 +27,6 @@ describe('AngularToolsServiceTest', function () {
         };
 
         x = expect(function () { tools.safeApply(undefined); }).toThrow(exc);
-        x = expect(function () { tools.safeApply(null);      }).toThrow(exc);
+        x = expect(function () { tools.safeApply(null); }).toThrow(exc);
     });
 });
