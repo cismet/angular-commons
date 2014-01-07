@@ -4,6 +4,7 @@
     "main": ["dist/scripts/angular-commons.js", "dist/scripts/angular-commons.min.js"],
     "ignore": [
         ".*",
+        "app",
         "config",
         "nbproject",
         "test",
