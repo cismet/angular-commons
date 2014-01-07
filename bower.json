@@ -1,7 +1,7 @@
 {
     "name": "angular-commons",
-    "version": "0.1.0",
-    "main": ["app/scripts/services/AngularTools.js"],
+    "version": "0.1.1",
+    "main": ["dist/scripts/angular-commons.js", "dist/scripts/angular-commons.min.js"],
     "ignore": [
         ".*",
         "config",
